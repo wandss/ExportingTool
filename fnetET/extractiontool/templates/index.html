@@ -1,0 +1,219 @@
+{%extends "base.html"%}
+{%load staticfiles%}
+{%block body%}
+<div class="loader" style='filter:alpha(opacity=50)'></div>
+
+ <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="mynav">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Extraction Tool</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                	<li class="active"><a href="/">Home</a></li>
+                    <li>
+                        <a href="appinfo/?about">About</a>
+                    </li>
+                    <li>
+                        <a href="appinfo/?contact">Contact</a>
+                    </li>
+                     <li id="logout">
+                        <a href="out"><span class="glyphicon glyphicon-log-out"> Logout</span></a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2" id="left_menu">
+            	{%if not login and not text%}
+            	<div class="well" id="left-well">
+		            <div class="list-group">
+		  					<a href="/?newserver" class="list-group-item active">Add New Server</a>
+				    	</div>
+				    	{%if saved_servers%}
+				    		<ul class="list-group">
+				    			<li class="list-group-item list-group-item-info">Existent Servers</li>
+				    			{%for server in saved_servers%}
+					    			<a href="remove/?{{server.pk}}" class="list-group-item">{{server.server_name}}</a>
+					    		{%endfor%}
+				    		</ul>
+				    	{%endif%}
+		            </div>
+		           {%endif%}
+		      </div>
+
+            <div class="col-md-8">
+            	<form method = "POST" id ="myform">
+            		{%csrf_token%}
+						{%if servers and not text%}
+						<div class="well" id="center-well">
+							<h3>Choose a Document Class:</h3>
+							<hr>
+							{%if no_user%}
+								<div class="form-group">
+									<label>Username:</label>
+									<input type="text" class="form-control" name="username" id="username">
+								</div>
+								<div class="form-group">
+									<label>Password:</label>
+									<input type="password" class="form-control" name="passwd" id="passwd">
+								</div>
+							{%endif%}
+							<div class="form-group" id="servers">
+				  				<label> Available Servers:</label>
+					 			<select class="form-control" id="available_servers" name="available_servers">
+					  				{%if not chosen_server%}
+					   				<option>Choose a server</option>
+					  				{%endif%}
+									{%for server in servers%}
+										<option>{{server.server_name}}</option>
+									{%endfor%}
+								</select>
+							</div>
+							{%if available_classes%}
+
+				 			<div class="form-group">
+				  				<label>Available Classes / Objects</label>
+					 			<select class="form-control" id="available_classes" name="selected_class">
+						  			{%if not properties%}
+						   			<option>Chose the apropriate Class / Object</option>
+						  			{%endif%}
+									{%for classname in available_classes%}
+										<option>{{classname.id}}</option>
+									{%endfor%}
+								</select>
+							</div>
+							{%endif%}
+
+							{%if properties%}
+								<div class="form-group">
+									<a type="button" class="btn btn-info" href="/">Back</a>
+								</div>
+								<div class="form-group">
+				    				<label>Mutiple select list (hold ctrl to select more than one):</label>
+									<select multiple class="form-control" id="class_properties">
+									{%for property in properties%}
+							 			<option>{{property}}</option>
+									{%endfor%}
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="comment">Paste the Document ID's below:</label>
+									<textarea class="form-control" rows="10" id="fnet_ids" name="fnet_ids"></textarea>
+								</div>
+								<div class ="form-group">
+									<input type="submit" value="Download">
+									<input type='text' id="chosen_props" name="chosen_props" hidden>
+								</div>
+							{%endif%}
+						{%elif text%}
+							{%if about%}
+							<div class="well" id="about_text">
+								<h3>Extraction Tool</h3>
+									<h4>What it does:</h4>
+										<p>This app was made for extracting documents from a CMIS compliant repository. It is not intended to be used for browsing or searching content in a CMIS compliant repository (your vendor probably have given you a very good interface for that). It is adressed for ECM administrators in need for some particularities, specifically for downloading content from repository. </p>
+										<p> Since it has been created based on an IBM's FileNet repository, some concepts like "document classes" may not be applied to repositories from other vendors.
+										</p>
+										<p>Usually ECM systems index files by metadata so, the oringal file name itself is, most of the time, not relevant. If or better, when, you have to extract a massive quantit of files, you'll probaly have some difficulties to identify the downloaded documet since it has been downloaded with it's original name and no metadata. Other commum problem is to have different files with the very same name.</p>
+										<p>So, with this tool, will be possible to download files, passing it's GUID, and choose which metada will be used to form it's name after download finishes. The GUID can be obtainned a content browsing software like IBM' Content Navigator or directly from database.</p>
+									<h4>Basic Usage:</h4>
+										<p>At the first login, will be requested to add a connection to the CMIS compliant server. Consult your CMIS compliant vendor or documentation for this address.</p>
+										<p>After correctly setting server(s) configuration(s), will be possible to inspect the document classes from IBM's FileNet or the object types underneath the repository's root.</p>
+										<p>Specify a Repository's user and password</p>
+										<p>This tool then, will inspect and return the properties associated with the selected document class.</p>
+										<p>Choose the properties you want by holding "CTRL + MOUSE CLICK". Do not select with "CTRL + A" or "SHIT + MOUSE CLICK".</p>
+										<p>Paste as many copied GUIDs you've got. The GUIDs must be each in it's own row in the text area field. Obviously the document must belong to the previously chosen Document Class. </p>
+										<p>Click the "Download" button.</p>
+										<p>The "Back" button, allows you to make a new search</p>
+										<p>To select a different user, click the "Logout" button</p>
+									<h4>Changing server configuration:</h4>
+										<p>Whenever you need to save a new server configuration, just go:<a href="/?newserver"> Home > Add New Server </a>
+										</p>
+										<p>To delete any server configuration, in: <a href="/?newserver"> Home > Add New Server </a>, click the server's name.</p>
+									<h4>Dependencies:</h4>
+									<ul>
+										<li><a href="https://www.python.org/">Python.</a></li>
+										<li><a href="https://www.djangoproject.com/">Django.</a></li>
+										<li><a href="https://chemistry.apache.org/python/cmislib.html">APACHE CMIS LIB.</a></li>
+										<li><a href="http://www.ibm.com/support/knowledgecenter/SSNW2F_5.1.0/com.ibm.installingp8cmis.doc/cmidv000.htm">For IBM FileNet P8 Platform, will be necessary to install IBM CMIS.</a></li>
+									</ul>
+									<h4>Final Information:</h4>
+									<p>Every time I had to export a huge amount of documents from IBM's FileNet, I just had to keep changing and updating a script I've made. Anytime I had to do it, I felt frusturated, since I was always just "reworking", and not "creating" anything new. So with this tool, I just don't need to update that old script over and over again, which saves me time, and allows me to ask a colleague to do this job if I'm busy with something else.</p>
+									<p>Since this is such a especific need I had, I really don't know if this can be usefull to anyone else. But since we're not alone and this is a really big world, I just hope it can be usefull to someone else ........... </p>
+									<p>Please let me know !!!</p>
+							</div>
+							{%elif contact%}
+								<div class="well" id="about_text">
+									<h3>Contact:</h3>
+										<h4><a href="https://github.com/wandss">Github</a></h4>
+								</div>
+
+							{%endif%}
+
+						{%else%}
+							<div class="well" id="center-well">
+								<div class="form-group">
+									<h3>Server Configuration:</h3>
+									<h4>Fill in the form below with Server's name and address.</h4>
+								</div>
+								<div class="form-group">
+									<label for ="server_name">Name for CMIS Server:</label>
+									<input type="text" class="form-control" name="server_name" id ="server_name" >
+									<h6><em>Just a simple name to indentify the server</em></h6>
+								</div>
+								<div class="form-group">
+									<label for ="server_address">Adress for CMIS Server:</label>
+									<input type="text" class="form-control" name="server_address" id="server_address">
+									<h6><em>The URI for CMIS server. Something like:</em><strong> "http://servername:port_number/fncmis/resources/Service"</strong></h6>
+								</div>
+								<button type="submit" class="btn btn-success">Save Settings</button>
+							</div>
+			   		{%endif%}
+			   	</div>
+               </form>
+            </div>
+
+            <div class="col-md-2" id="right-menu">
+		            {%if errors%}
+		            <div class="well" id="rigth-well">
+						   <div class="panel panel-danger">
+						   	<div class="panel-heading">Error Descriptions:</div>
+						      <div class="panel-body">
+						      	{%for id, error in errors.items%}
+						      		<p><strong>{{id}}</strong> : {{error}}</p>
+						      	{%endfor%}
+							  </div>
+							</div>
+						</div>
+						{%endif%}
+        		</div>
+    </div>
+
+
+<!-- Footer
+<footer>
+    <div class="row">
+        <div class="col-md-12">
+            <p>Copyright &copy; Your Website 2014</p>
+        </div>
+    </div>
+</footer>
+
+-->
+
+{%endblock%}
