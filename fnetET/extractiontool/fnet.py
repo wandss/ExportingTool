@@ -4,12 +4,12 @@ class Conecta(object):
     def cmisConnect(server_address, user, passwd):
         """Returns a repository CmisLib object
         """
-        try:    
-            from cmislib.model import CmisClient          
+        try:
+            from cmislib.model import CmisClient
             client = CmisClient(server_address, user, passwd)
             rep = client.defaultRepository
             return(rep)
-        except Exception as e:  
+        except Exception as e:
             print ('Exception>>>> '+str(e))
             return (str(e))
 
@@ -18,13 +18,12 @@ class Fnet(object):
     """Class to handle FileNet.
     """
     def __init__(self, server_address, username, passwd):
-        """Connects to the repository and has methods: getFnetClasses, 
+        """Connects to the repository and has methods: getFnetClasses,
         getClass and removeSystemProperties.
-        """                
+        """
         self.rep = Conecta.cmisConnect(server_address, username, passwd)
         self.classes = []
-        self.systemclasses = ['cmis:document',                                       
-                            'WorkflowDefinition',
+        self.systemclasses = ['WorkflowDefinition',
                             'XMLPropertyMappingScript',
                             'CodeModule',
                             'ScenarioDefinition', 'Simulation',
@@ -35,7 +34,7 @@ class Fnet(object):
                             'WebContentTemplate','StoredSearch',
                             'cmis:folder','ClbTeamspace',
                             'ClbTeamspaceTemplate','PreferencesFolder',
-                            'FormProxyFolder', 'PublishTemplate']                
+                            'FormProxyFolder', 'PublishTemplate']
         self.systemprops = ['cmis:','MajorVersionNumber',
                             'StorageLocation',
                             'DateContentLastAccessed',
@@ -65,9 +64,9 @@ class Fnet(object):
         """Method that returns a list object with FileNet custom Classes objects.
         The systemclasses declared on self.systemclasses will be excluded.
         """
-        self.classes = [fnclass for fnclass in self.rep.getTypeDescendants() 
+        self.classes = [fnclass for fnclass in self.rep.getTypeDescendants()
             if fnclass.id not in self.systemclasses]
-        return self.classes 
+        return self.classes
 
     def getClass(self, fnclass_name):
         """Returns a cmislib.model Object for a
@@ -75,7 +74,7 @@ class Fnet(object):
         """
         if not self.classes:
             self.classes = [fnclass for fnclass in
-                self.rep.getTypeDescendants() 
+                self.rep.getTypeDescendants()
                 if fnclass.id
                 not in self.systemclasses]
         fnclass = [fnclass for fnclass in self.classes
@@ -83,12 +82,12 @@ class Fnet(object):
         if fnclass:
             return fnclass[0]
         else:
-            return None  
+            return None
 
     def removeSystemProperties(self, properties):
         """Remove system properties from class
         and returns a list of properties assotiated with class.
-        Expects a dictionary from "myclass.properties", a cmis.lib 
+        Expects a dictionary from "myclass.properties", a cmis.lib
         object type.
         """
         properties = [props for props in properties
