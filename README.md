@@ -22,4 +22,11 @@ So this tool was born.......
 This program was made to help me on a particular issue but been the world as big as it is, who knows if it can't help anybody else.
 So... let me know if it can be usefull in some way.
 
+###Installing:
+After installing: Python 2.7 and Django, install cmislib. I suggest installing with pip.
+
+Clone the repository:
+
+
+
 ###How to use:
