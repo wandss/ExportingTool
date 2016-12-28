@@ -25,9 +25,10 @@ So... let me know if it can be usefull in some way.
 ###Installing:
 After installing: Python 2.7 and Django, install cmislib. I suggest installing with pip. And also recommend using virtualenv or virtualenvwrapper
 
-Clone the repository:
+Clone the repository: git clone https://github.com/wandss/ExportingTool.git
 
+Go to directory and run python manage.py runserver
 
-
+Access your browser with the given port, probably something like "http://127.0.0.1:8000"
 
 ###How to use:
