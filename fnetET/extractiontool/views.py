@@ -16,7 +16,7 @@ def index(request):
 			server_name = request.POST.get('server_name')
 			server_address = request.POST.get('server_address')
 			edit = request.POST.get('edit')
-			if edit:
+			if edit:				
 				CmisServer.objects.filter(pk = edit).update(
 					server_name=server_name,
 					server_address=server_address)
@@ -39,7 +39,7 @@ def index(request):
 			chosen_server = request.POST.get('available_servers')			
 			server = CmisServer.objects.filter(server_name = chosen_server)	
 			context['servers'] = server
-			context['chosen_server'] = True		
+			context['chosen_server'] = True					
 			fnet = Fnet(server[0].server_address, user, passwd)
 
 			if type(fnet.rep) == type(str()):
@@ -81,7 +81,7 @@ def index(request):
 			context['saved_servers'] = servers
 		return render(request, "index.html", context)
 
-	context['servers'] = servers
+	context['servers'] = servers	
 	return render(request, "index.html", context)
 
 

@@ -62,5 +62,13 @@ $(document).ready(function(){
 		$("#server_address").val(server_address);
 		$('#edit').val(server_pk);
 	});
+	username = document.getElementById('username').value;
+	passwd = document.getElementById('passwd').value;		
+	if (username !== '' & passwd !== '' ){			
+		$("#available_servers").removeAttr('disabled');			
+	}
+	else{
+		$("#available_servers").attr('disabled', 'true');			
+	}
 
 })

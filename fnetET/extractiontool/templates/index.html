@@ -80,7 +80,11 @@
 							{%endif%}
 							<div class="form-group">
 				  				<label> Available Servers:</label>
-					 			<select class="form-control" id="available_servers" name="available_servers" disabled id="available_servers">
+				  				{%if not servers%}
+					 				<select class="form-control" id="available_servers" name="available_servers" disabled id="available_servers">
+					 			{%else%}
+					 				<select class="form-control" id="available_servers" name="available_servers" id="available_servers">
+					 			{%endif%}
 					  				{%if not chosen_server%}
 					   				<option>Choose a server</option>
 					  				{%endif%}
@@ -88,7 +92,12 @@
 										<option>{{server.server_name}}</option>
 									{%endfor%}
 								</select>
+							</div>	
+							
+							<div class="form-group">
+									<a type="button" class="btn btn-info" href="/">Back</a>
 							</div>
+													
 							{%if available_classes%}
 
 				 			<div class="form-group">
@@ -105,9 +114,6 @@
 							{%endif%}
 
 							{%if properties%}
-								<div class="form-group">
-									<a type="button" class="btn btn-info" href="/">Back</a>
-								</div>
 								<div class="form-group">
 				    				<label>Mutiple select list (hold ctrl to select more than one):</label>
 									<select multiple class="form-control" id="class_properties">
@@ -186,6 +192,7 @@
 									<h6><em>The URI for CMIS server. Something like:</em><strong> "http://servername:port_number/fncmis/resources/Service"</strong></h6>
 								</div>
 								<button type="submit" class="btn btn-success">Save Settings</button>
+								<input type="text" id="edit" name="edit" hidden>
 							</div>
 			   		{%endif%}
 			   	</div>
