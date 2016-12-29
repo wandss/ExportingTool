@@ -49,7 +49,11 @@
 				    		<ul class="list-group">
 				    			<li class="list-group-item list-group-item-info">Existent Servers</li>
 				    			{%for server in saved_servers%}
-					    			<a href="remove/?{{server.pk}}" class="list-group-item">{{server.server_name}}</a>
+					    			<div class="list-group-item btn" id="server" serverPk="{{server.pk}}"
+					    			serverName="{{server.server_name}}" address="{{server.server_address}}">
+					    				 <span class="glyphicon glyphicon-edit" id="edit_button"></span> {{server.server_name}} 
+					    				<a href="remove/?{{server.pk}}" class="close" id="delete_server" >&times;</a>				    				
+					    			</div>			    								    			
 					    		{%endfor%}
 				    		</ul>
 				    	{%endif%}
@@ -74,9 +78,9 @@
 									<input type="password" class="form-control" name="passwd" id="passwd">
 								</div>
 							{%endif%}
-							<div class="form-group" id="servers">
+							<div class="form-group">
 				  				<label> Available Servers:</label>
-					 			<select class="form-control" id="available_servers" name="available_servers">
+					 			<select class="form-control" id="available_servers" name="available_servers" disabled id="available_servers">
 					  				{%if not chosen_server%}
 					   				<option>Choose a server</option>
 					  				{%endif%}

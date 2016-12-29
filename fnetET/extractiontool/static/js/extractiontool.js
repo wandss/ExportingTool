@@ -38,56 +38,29 @@ $(document).ready(function(){
 		passwd = document.getElementById('passwd').value;
 		
 		if (username !== '' & passwd !== '' ){			
-			$("#servers").removeAttr('disabled');			
+			$("#available_servers").removeAttr('disabled');			
 		}
 		else{
-			$("#servers").attr('disabled', 'true');			
+			$("#available_servers").attr('disabled', 'true');			
 		}
 	});
-	username = document.getElementById('username').value;
-	passwd = document.getElementById('passwd').value;
-		
-	if (username !== '' & passwd !== '' ){			
-		$("#servers").removeAttr('disabled');			
-	}
-	else{
-		$("#servers").attr('disabled', 'true');			
-	}
+	$("#server, #delete_server").mouseenter(function(){
+		$(this).css('background-color', '#ee403c');
+		$(this).css('text-shadow', '-6px 8px 2px black');
 
-})
-/*$(document).ready(function(){
-	$('#available_classes').change(function(){
-		var chosen_class = document.getElementById('available_classes').value;		
-		$.get('/teste/',{chosen: chosen_class}, function(data){
-			var properties = data;
-			var splited = data.split('');
-
-			for (i=0;i<splited.length;i++){
-				$("#class_properties").append("<option id='property' value="+splited[i]+">"+splited[i]+"</option>")
-			}
-		});
 	});
+	$("#server, #delete_server").mouseleave(function(){
+		$(this).css('background-color', '');
+		$(this).css('text-shadow', '');
+	});	
 
-
-	var properties = []
-	$("#class_properties").change(function(){
-		var props = document.getElementById("class_properties").value;	
-		var teste = document.getElementById("class_properties");	
-		alert(teste.selected);
-		var found = false;
-		
-		for (i=0; i < properties.length; i++){
-			if (props == properties[i]){
-				found = true;				
-			}
-		} 
-		if (found === false) {
-			properties.push(props)
-		}
-		$("#chosen_props").val(properties);
-		
+	$(".list-group-item, btn ").click(function(){		
+		var server_address = $(this).attr('address');
+		var server_name =  $(this).attr('serverName');	
+		var server_pk = $(this).attr('serverPk');	 			
+		$("#server_name").val(server_name);		
+		$("#server_address").val(server_address);
+		$('#edit').val(server_pk);
 	});
 
 })
-
-*/

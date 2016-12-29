@@ -12,9 +12,15 @@ def index(request):
 	if request.method == 'POST':
 
 		if request.POST.get('server_name'):
-			"""Acessed when saving a new server"""
+			"""Acessed when creating or editing a server"""
 			server_name = request.POST.get('server_name')
 			server_address = request.POST.get('server_address')
+			edit = request.POST.get('edit')
+			if edit:
+				CmisServer.objects.filter(pk = edit).update(
+					server_name=server_name,
+					server_address=server_address)
+				return redirect('/')
 			CmisServer(server_name=server_name, 
 				server_address=server_address).save()
 			return redirect('/')
@@ -37,7 +43,7 @@ def index(request):
 			fnet = Fnet(server[0].server_address, user, passwd)
 
 			if type(fnet.rep) == type(str()):
-				context['errors'] = {'id' : fnet.rep}
+				context['errors'] = {'Error' : fnet.rep}
 				return render(request, "index.html", context)
 
 			if server and not request.POST.has_key('selected_class'):				
