@@ -26,7 +26,7 @@ p{
     margin-left: -12%;
 }
 #center-well {
-    box-shadow: -7px -1px 33px 2px #444;  
+    box-shadow: -7px -1px 33px 2px #444;
 }
 .list-group, .panel{
     margin: -7px -13px 10px -13px;
@@ -36,9 +36,9 @@ p{
     text-align: justify;
     font-size: 15px;
 }
-#about_text > h4{    
+#about_text > h4{
     font-weight: bold;
 }
 #server{
-    transition: ease-in-out .4s;    
+    transition: ease-in-out .4s;
 }

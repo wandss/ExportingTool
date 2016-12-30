@@ -43,7 +43,7 @@
             	{%if not login and not text%}
             	<div class="well" id="left-well">
 		            <div class="list-group">
-		  					<a href="/?newserver" class="list-group-item active">Add New Server</a>
+		  					<a href="/?newserver" class="list-group-item active">Add / Edit New Server</a>
 				    	</div>
 				    	{%if saved_servers%}
 				    		<ul class="list-group">
@@ -51,9 +51,9 @@
 				    			{%for server in saved_servers%}
 					    			<div class="list-group-item btn" id="server" serverPk="{{server.pk}}"
 					    			serverName="{{server.server_name}}" address="{{server.server_address}}">
-					    				 <span class="glyphicon glyphicon-edit" id="edit_button"></span> {{server.server_name}} 
-					    				<a href="remove/?{{server.pk}}" class="close" id="delete_server" >&times;</a>				    				
-					    			</div>			    								    			
+					    				 <span class="glyphicon glyphicon-edit" id="edit_button"></span> {{server.server_name}}
+					    				<a href="remove/?{{server.pk}}" class="close" id="delete_server" >&times;</a>
+					    			</div>
 					    		{%endfor%}
 				    		</ul>
 				    	{%endif%}
@@ -92,12 +92,12 @@
 										<option>{{server.server_name}}</option>
 									{%endfor%}
 								</select>
-							</div>	
-							
+							</div>
+
 							<div class="form-group">
 									<a type="button" class="btn btn-info" href="/">Back</a>
 							</div>
-													
+
 							{%if available_classes%}
 
 				 			<div class="form-group">
@@ -184,14 +184,14 @@
 								<div class="form-group">
 									<label for ="server_name">Name for CMIS Server:</label>
 									<input type="text" class="form-control" name="server_name" id ="server_name" >
-									<h6><em>Just a simple name to indentify the server</em></h6>
+									<h6 class="my_h6"><em>Just a simple name to indentify the server. Limited to 18 characters!</em></h6>
 								</div>
 								<div class="form-group">
 									<label for ="server_address">Adress for CMIS Server:</label>
 									<input type="text" class="form-control" name="server_address" id="server_address">
 									<h6><em>The URI for CMIS server. Something like:</em><strong> "http://servername:port_number/fncmis/resources/Service"</strong></h6>
 								</div>
-								<button type="submit" class="btn btn-success">Save Settings</button>
+								<button type="button" class="btn btn-success" id="save_set">Save Settings</button>
 								<input type="text" id="edit" name="edit" hidden>
 							</div>
 			   		{%endif%}
