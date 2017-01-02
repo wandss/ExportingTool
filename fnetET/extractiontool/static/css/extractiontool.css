@@ -19,9 +19,11 @@ p{
 }
 
 #left-well{
-    width: 113%;
+    width: 150%;
+    margin-left: -40%;
+    float:left;
 }
-#rigth-well{
+#right-well{
     width: 200%;
     margin-left: -12%;
 }
@@ -41,4 +43,11 @@ p{
 }
 #server{
     transition: ease-in-out .4s;
+}
+#server_info_item:hover{
+    background-color: #27C;
+    color: white;
+    text-shadow: -4px 8px 3px black;
+    font-size: 15px;
+    transition: .2s ease-in;
 }

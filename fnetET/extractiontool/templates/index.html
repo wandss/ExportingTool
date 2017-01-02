@@ -49,13 +49,20 @@
 				    		<ul class="list-group">
 				    			<li class="list-group-item list-group-item-info">Existent Servers</li>
 				    			{%for server in saved_servers%}
-					    			<div class="list-group-item btn" id="server" serverPk="{{server.pk}}"
+					    			<div class="list-group-item" id="server" serverPk="{{server.pk}}"
 					    			serverName="{{server.server_name}}" address="{{server.server_address}}">
 					    				 <span class="glyphicon glyphicon-edit" id="edit_button"></span> {{server.server_name}}
 					    				<a href="remove/?{{server.pk}}" class="close" id="delete_server" >&times;</a>
 					    			</div>
 					    		{%endfor%}
 				    		</ul>
+				    	{%endif%}
+				    	{%if server_info%}
+				    		<ul class="list-group">
+				    			<li class="list-group-item list-group-item-info">Server Info</li>
+				    			{%for k, v in server_info.items%}
+				    				<div class="list-group-item" id="server_info_item">{{k.capitalize}} - {{v}}</div>
+				    			{%endfor%}
 				    	{%endif%}
 		            </div>
 		           {%endif%}
@@ -201,7 +208,7 @@
 
             <div class="col-md-2" id="right-menu">
 		            {%if errors%}
-		            <div class="well" id="rigth-well">
+		            <div class="well" id="right-well">
 						   <div class="panel panel-danger">
 						   	<div class="panel-heading">Error Descriptions:</div>
 						      <div class="panel-body">
