@@ -9,6 +9,7 @@ class DownloadContentView(generic.View):
         passwd = request.session.get('passwd')
         server_uri = request.session.get('server_uri')
         repo = Fnet(server_uri, username, passwd)
-        context['repo_classes'] = repo.getFnetClasses()
+        repo.getFnetClasses()
+        context['repo_classes'] = repo.classes
 
         return render(request, 'download_content_list.html', context)

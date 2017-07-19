@@ -1,5 +1,12 @@
 $(document).ready(function(){
         $('#delete_confirm_modal').modal('show');
+        
+        $('#class_id').change(function(){
+            var request = new XMLHttpRequest();
+            request.open("GET", "http://google.com", true);
+            
+            alert($('#class_id').val());
+        });
 
 	$('#available_servers').change(function(){
 		var server = document.getElementById('available_servers').value;
@@ -82,5 +89,6 @@ $(document).ready(function(){
 	else{
 		$("#available_servers").attr('disabled', 'true');
 	}
+    
 
 })

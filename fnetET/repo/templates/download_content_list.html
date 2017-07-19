@@ -15,9 +15,9 @@
         </div>
         <div class="col-md-6">
             <div class="well" id="centerwell">
-                <select class="form-control">
+                <select class="form-control" id="class_id">
                 {%for classe in repo_classes%}
-                    <option>{{classe}} </option>
+                <option value="{{classe.id}}">{{classe}} </option>
                 {%endfor%}                        
                 </select>
             </div>
