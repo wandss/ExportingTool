@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'servers',
-    'extractiontool'
+    'extractiontool',
+    'repo'
 )
 
 MIDDLEWARE_CLASSES = (

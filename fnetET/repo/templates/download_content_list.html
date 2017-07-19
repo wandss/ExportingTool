@@ -15,12 +15,11 @@
         </div>
         <div class="col-md-6">
             <div class="well" id="centerwell">
-                <ul class="list-group">
-                    <li class="list-group-item active">Repository Info:</li>
-                {%for k,v in repinfo.items%}
-                <li class="list-group-item"><strong>{{k}}:</strong> {{v}}</li>
-                {%endfor%}
-                </ul>
+                <select class="form-control">
+                {%for classe in repo_classes%}
+                    <option>{{classe}} </option>
+                {%endfor%}                        
+                </select>
             </div>
         </div>
         {%if error%}

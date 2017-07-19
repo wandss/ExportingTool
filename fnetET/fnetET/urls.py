@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('extractiontool.urls', namespace="extractiontool")),
     url(r'^servers/', include('servers.urls', namespace="servers")),
+    url(r'^repo/', include('repo.urls', namespace="repos")),
 ]
