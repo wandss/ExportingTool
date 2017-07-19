@@ -1,8 +1,12 @@
 from django.shortcuts import render, HttpResponse
-from django.views.generic import ListView
-from django.views.generic.edit import CreateView
+from django.views import generic
 from .models import CmisServer
 
-class ServerList(ListView):
+class ServerList(generic.ListView):
     model = CmisServer
+
+class ServerCreate(generic.edit.CreateView):
+    model = CmisServer
+    fields = ['server_name', 'server_address']
+    success_url = '/'
 
