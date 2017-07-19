@@ -6,8 +6,15 @@
     <div class="row">
         <div class="col-md-3" id="left_menu">
             <div class="well" id="leftwell">
-               LISTAR SERVERS
-               ADD SERVERS 
+                <ul class="list-group">
+                    <li class="list-group-item active">Servers:</li>
+                    {%for server in servers%}
+                    <a href="{%url 'servers:update_server' server.id %}" class="list-group-item" id="server_info_item" >
+                        {{server.server_name}}
+                    </a>
+                    {%endfor%}
+                </ul>
+                <a href="{%url 'servers:new_server'%}" class="btn btn-default btn-block"> Add Server Config</a>
             </div>
         </div>
         <div class="col-md-6">
@@ -16,9 +23,9 @@
                 <div class="well" id="centerwell">
                     <div class="form-group">
                         <label for="">Available Servers:</label>
-                        <select class="form-control" >
+                        <select class="form-control" name="server_id">
                             {%for server in servers%}
-                            <option value={{server.id}}>{{server.server_name}}</option>
+                            <option  value="{{server.id}}">{{server.server_name}}</option>
                             {%endfor%}
                         </select>
                     </div>

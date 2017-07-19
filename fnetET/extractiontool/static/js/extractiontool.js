@@ -1,4 +1,5 @@
 $(document).ready(function(){
+        $('#delete_confirm_modal').modal('show');
 
 	$('#available_servers').change(function(){
 		var server = document.getElementById('available_servers').value;

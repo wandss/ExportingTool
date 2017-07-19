@@ -7,7 +7,7 @@ from fnet import Fnet, Conecta
 from getContentWithIDAnyClass import GetDocuments
 from extractiontool.models import *
 from servers.models import CmisServer
-
+from .fnet import Fnet
 
 class IndexView(generic.View):
     def get(self, request):
@@ -21,7 +21,21 @@ class IndexView(generic.View):
         return render(request, 'servers_list.html',context)
 
     def post(self, request):
-        return HttpResponse('CONNECTED')
+        context = {}
+
+        server = CmisServer.objects.get(pk=request.POST.get('server_id'))
+        server_uri = server.server_address
+        username = request.POST.get('username')
+        passwd = request.POST.get('passwd')
+
+        repository = Fnet(server_uri, username, passwd) 
+        #import pdb;pdb.set_trace()#DEBUG
+        context['repinfo'] = repository.rep.info
+        request.session['username'] = username
+        request.session['passwd'] = passwd
+        request.session['server_uri'] = server_uri
+        return render(request, 'connected_server.html', context)
+
 
 
 
