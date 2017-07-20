@@ -22,7 +22,7 @@ So this tool was born.......
 This program was made to help me on a particular issue but been the world as big as it is, who knows if it can't help anybody else.
 So... let me know if it can be usefull in some way.
 
-###Installing:
+### Installing:
 After installing: Python 2.7 and Django, install cmislib. I suggest installing with pip. And also recommend using virtualenv or virtualenvwrapper
 
 Clone the repository: git clone https://github.com/wandss/ExportingTool.git
@@ -31,4 +31,4 @@ Go to directory and run python manage.py runserver
 
 Access your browser with the given port, probably something like "http://127.0.0.1:8000"
 
-###How to use:
+### How to use:
