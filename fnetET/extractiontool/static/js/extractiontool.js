@@ -1,99 +1,56 @@
 $(document).ready(function(){
     $('#delete_confirm_modal').modal('show');
     
-   /* $('#class_id').change(function(){
-        var request = new XMLHttpRequest();
-        request.open("GET", "http://google.com", true);
-        $.get('http://www.google.com/')
-        
-        alert($('#class_id').val());
-    });
-*/
     $("#class_id").change(function(){
         $("#get_props_form").submit();
     })
 
-	$('#available_servers').change(function(){
-		var server = document.getElementById('available_servers').value;
-		$("#myform").submit();
-	});
+    var props_to_name = []
 
-	$("#available_classes").change(function(){
-		var chosen_class = document.getElementById('available_classes').value;
-		$("#myform").submit();
-	});
-	$("#class_properties").click(function(){
-		var property = $(this).val();
-		$("#chosen_props").val(property);
-	});
+    $("body #prop_name").hover(function(){
+        var prop = this.innerText;
+        var found = 0;
+        $(this).children('#selected_prop').click(function(){
+            if (this.checked == true){
+                for(i=0;i<props_to_name.length; i++){
+                    if (prop == props_to_name[i]){
+                        found ++
+                    } 
+                }
+                if (found == 0){
+                    props_to_name.push(prop);
+                    $('#props_to_name').val(props_to_name);
+                }
+            }
+            else{
+                for(i=0;i<props_to_name.length; i++){
+                    if (prop == props_to_name[i]){
+                        props_to_name.splice(i,1);
+                        $('#props_to_name').val(props_to_name);
+                    } 
+                }
+            }
+        });
+    });
+    $('#left_menu').mouseenter(function(){
+            $('#left-well').css('box-shadow', '-7px -1px 33px 2px #444');
+            $('#center-well').css('box-shadow', '0px 0px 0px 0px #444');
 
-	$('#left_menu').mouseenter(function(){
-		$('#left-well').css('box-shadow', '-7px -1px 33px 2px #444');
-		$('#center-well').css('box-shadow', '0px 0px 0px 0px #444');
 
+    });
+    $('#left_menu').mouseleave(function(){
+            $('#left-well').css('box-shadow', '0px 0px 0px 0px #444');
+            $('#center-well').css('box-shadow','-7px -1px 33px 2px #444');
+    });
 
-	});
-	$('#left_menu').mouseleave(function(){
-		$('#left-well').css('box-shadow', '0px 0px 0px 0px #444');
-		$('#center-well').css('box-shadow','-7px -1px 33px 2px #444');
-	});
+    $('#right-menu').mouseenter(function(){
+            $('#rigth-well').css('box-shadow', '-7px -1px 33px 2px #444');
+            $('#center-well').css('box-shadow', '0px 0px 0px 0px #444');
+    });
+    $('#right-menu').mouseleave(function(){
+            $('#rigth-well').css('box-shadow', '0px 0px 0px 0px #444');
+            $('#center-well').css('box-shadow','-7px -1px 33px 2px #444');
+    });
 
-	$('#right-menu').mouseenter(function(){
-		$('#rigth-well').css('box-shadow', '-7px -1px 33px 2px #444');
-		$('#center-well').css('box-shadow', '0px 0px 0px 0px #444');
-	});
-	$('#right-menu').mouseleave(function(){
-		$('#rigth-well').css('box-shadow', '0px 0px 0px 0px #444');
-		$('#center-well').css('box-shadow','-7px -1px 33px 2px #444');
-	});
-	$("#username, #passwd").change(function(){
-		username = document.getElementById('username').value;
-		passwd = document.getElementById('passwd').value;
-
-		if (username !== '' & passwd !== '' ){
-			$("#available_servers").removeAttr('disabled');
-		}
-		else{
-			$("#available_servers").attr('disabled', 'true');
-		}
-	});
-	$("#server, #delete_server").mouseenter(function(){
-		$(this).css('background-color', '#ee403c');
-		$(this).css('text-shadow', '-6px 8px 2px black');
-
-	});
-	$("#server, #delete_server").mouseleave(function(){
-		$(this).css('background-color', '');
-		$(this).css('text-shadow', '');
-	});
-
-	$(".list-group-item, btn ").click(function(){
-		var server_address = $(this).attr('address');
-		var server_name =  $(this).attr('serverName');
-		var server_pk = $(this).attr('serverPk');
-		$("#server_name").val(server_name);
-		$("#server_address").val(server_address);
-		$('#edit').val(server_pk);
-	});
-	$("#save_set").click(function(){
-		var server_name = $("#server_name").val();
-		if (server_name.length > 18){
-			$(".my_h6").prepend('<div class="warning_message" style="color: red"><em>This field is limited to 18 Characters!!!</em></div>');
-			return false;
-		}
-		else {
-			$("#myform").submit();
-		}
-
-	});
-	username = document.getElementById('username').value;
-	passwd = document.getElementById('passwd').value;
-	if (username !== '' & passwd !== '' ){
-		$("#available_servers").removeAttr('disabled');
-	}
-	else{
-		$("#available_servers").attr('disabled', 'true');
-	}
-    
 
 })

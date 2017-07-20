@@ -1,4 +1,5 @@
 #encoding=utf-8
+
 class Conecta(object):
     @staticmethod
     def cmisConnect(server_address, user, passwd):
@@ -61,11 +62,17 @@ class Fnet(object):
                             'MinorVersionNumber','IsReserved']
 
     def getFnetClasses(self):
-        """Method that returns a list object with FileNet custom Classes objects.
+        """Method that returns a list object with FileNet custom Classes
+        objects, ordered by localName Property.
         The systemclasses declared on self.systemclasses will be excluded.
         """
-        self.classes = [fnclass for fnclass in self.rep.getTypeDescendants()
+        classes = [fnclass for fnclass in self.rep.getTypeDescendants()
             if fnclass.id not in self.systemclasses]
+        ordered_names = [class_name.localName for class_name in classes]
+        ordered_names.sort()
+        self.classes = [class_object for name in ordered_names 
+                       for class_object in classes 
+                        if class_object.localName == name]
         return self.classes
 
     def getClass(self, fnclass_name):
@@ -94,4 +101,5 @@ class Fnet(object):
                     if props not in self.systemprops]
         properties = [prop for prop in properties
                     if not prop.startswith('cmis')]
+        properties.sort()
         return properties
