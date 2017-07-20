@@ -14,13 +14,25 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="well" id="centerwell">
-                <select class="form-control" id="class_id">
-                {%for classe in repo_classes%}
-                <option value="{{classe.id}}">{{classe}} </option>
-                {%endfor%}                        
-                </select>
-            </div>
+            <form action="" method="POST" id="get_props_form">
+            {%csrf_token%}
+                <div class="well" id="centerwell">
+                    {%if repo_classes%}
+                        <select class="form-control" id="class_id" name="classe_id">
+                        {%for classe in repo_classes%}
+                        <option value="{{classe.id}}">{{classe.localName}} </option>
+                        {%endfor%}                        
+                        </select>
+                    {%elif repo_class%}    
+                        <input type="text" class="form-control" disabled value="{{repo_class.localName}}">
+                        <ul>
+                        {%for v in repo_class.properties.values%}
+                        <li>{{v.localName}}</li>
+                        {%endfor%}
+                        </ul>
+                    {%endif%}
+                </div>
+            </form>
         </div>
         {%if error%}
             <div class="col-md-3">

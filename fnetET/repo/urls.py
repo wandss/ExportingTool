@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from repo.views import DownloadContentView
+from repo.views import repo_class
 
 urlpatterns = [
-    url(r'^content/$', DownloadContentView.as_view(), name='contents'),
+    url(r'^content/$', repo_class, name='contents'),
 ]

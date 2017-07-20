@@ -1,12 +1,17 @@
 $(document).ready(function(){
-        $('#delete_confirm_modal').modal('show');
+    $('#delete_confirm_modal').modal('show');
+    
+   /* $('#class_id').change(function(){
+        var request = new XMLHttpRequest();
+        request.open("GET", "http://google.com", true);
+        $.get('http://www.google.com/')
         
-        $('#class_id').change(function(){
-            var request = new XMLHttpRequest();
-            request.open("GET", "http://google.com", true);
-            
-            alert($('#class_id').val());
-        });
+        alert($('#class_id').val());
+    });
+*/
+    $("#class_id").change(function(){
+        $("#get_props_form").submit();
+    })
 
 	$('#available_servers').change(function(){
 		var server = document.getElementById('available_servers').value;
