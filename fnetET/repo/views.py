@@ -40,17 +40,26 @@ class DownloadView(generic.View):
             contents = GetDocuments(doc_class, object_ids, search_by,
                                     compose_doc_name, repo.rep)
             contents.getContentWithQuery()
+            context['warning'] = contents.checkCompletion()
+            context['result_ok'] = contents.found_docs
 
         return render(request, 'download_content_list.html', context)
 
     """
     TODO:
+        Criar lista com documentos localizados
+        Ao fim retornar os numeros dos documentos lacalizados e documentos nao 
+        localizados.
+        Remover valores vazios da lista
+        Adicionar mensagem de conclusão após finalizado downloads.
+        Criar lista com os documentos localizados
+        Criar mensagens de erro e bloco try
         Add object_id in class props list
         Add blank value as first item to class names list
 
-    Testar serializar dados da classe. Isso permitirá que
-    que, após escolhida a classe pelo usuário, não seja necessário uma nova
-    conexão ao repositório.
-    contudo, deverá ser criado uma classe com um método para ordenar as
-    propriedades
+        Testar serializar dados da classe. Isso permitirá que
+        que, após escolhida a classe pelo usuário, não seja necessário uma nova
+        conexão ao repositório.
+        contudo, deverá ser criado uma classe com um método para ordenar as
+        propriedades
     """

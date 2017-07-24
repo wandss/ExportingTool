@@ -10,6 +10,7 @@ class GetDocuments(object):
         self.search_by = search_by
         self.compose_doc_name = compose_doc_name
         self.rep = rep
+        self.found_docs = []
 
 
         #self.__startDownload()
@@ -20,7 +21,9 @@ class GetDocuments(object):
             queries.append("select * from %s where %s='%s'"%(self.doc_class,
                                                       self.search_by,
                                                       object_id.strip('\r')))
-        results = [self.rep.query(q).getResults() for q in queries]            
+        results = [result for q in queries for result in self.rep.query(q) 
+                   if result] 
+        self.found_docs = [r.properties[self.search_by] for r in results]
         self.__saveContent(results)
 
 
@@ -85,21 +88,27 @@ class GetDocuments(object):
                 self.errors[i] = str(e)
 
     def __saveContent(self, results):
-        for result in results:
-            for res in result:
-                doc_name = self.__createDocName(res)
-                f = open(doc_name, 'wb')
-                f.write(res.getContentStream().read())
-                f.close()
+        for res in results:
+            doc_name = self.__createDocName(res)
+            f = open(doc_name, 'wb')
+            f.write(res.getContentStream().read())
+            f.close()
 
     def __createDocName(self, content):
         props = content.properties
-        doc_name = ('-').join([str(props[doc.strip(' ')]) for doc in self.compose_doc_name])
+        doc_name = [props[doc.strip(' ')] for doc in self.compose_doc_name]
+        for i, name in enumerate(doc_name):
+            if not isinstance(name, unicode):
+                doc_name[i] = unicode(name) 
+        doc_name = ('-').join(doc_name)
         doc_name.strip('.')
         extension = content.name.split('.')[-1] 
         doc_name += content.id[-13:]
         doc_name += '.'+extension
 
         return doc_name
+
+    def checkCompletion(self):
+        return [obj for obj in self.object_ids if obj not in self.found_docs] 
 
 
