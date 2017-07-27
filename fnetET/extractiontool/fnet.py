@@ -103,3 +103,23 @@ class Fnet(object):
                     if not prop.startswith('cmis')]
         properties.sort()
         return properties
+
+    def getFolders(self):
+        rf = self.rep.getRootFolder()
+        structure = {rf.name:rf.getTree().getResults()}
+
+        import pdb;pdb.set_trace()#DEBUG
+        for folders in rf.getTree().getResults():
+            folder = folders.getTree().getResults()
+            print folder
+            while folder.getTree():
+                folder = self.getSubFolders(folder.getTree().getResults())
+
+        import pdb;pdb.set_trace()#DEBUG
+
+    def getSubFolders(self, lista):
+        for l in lista:
+            print lista
+                
+
+

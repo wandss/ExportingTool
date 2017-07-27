@@ -45,6 +45,18 @@ class DownloadView(generic.View):
 
         return render(request, 'download_content_list.html', context)
 
+class BrowseRepoView(generic.View):
+    def get(self, request):
+        context = {}
+        username = request.session.get('username')
+        passwd = request.session.get('passwd')
+        server_uri = request.session.get('server_uri')
+        repo = Fnet(server_uri, username, passwd)
+        context['rep'] = repo.rep
+
+        return render(request, 'browse_content_list.html', context)
+
+
     """
     TODO:
         Criar lista com documentos localizados
